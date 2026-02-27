@@ -23,6 +23,35 @@ body.casino-mode{
   --accent-dim:rgba(245,166,35,0.15);
   --accent-glow:rgba(245,166,35,0.4);
 }
+/* Arcade mode — default purple/cyan, unchanged from :root but explicit */
+body.arcade-mode{
+  --accent:#9b7cff;
+  --accent-dim:rgba(155,124,255,0.15);
+  --accent-glow:rgba(155,124,255,0.35);
+}
+/* Casino cabinet extras: gold marquee glow */
+body.casino-mode .cab-marquee{
+  box-shadow:0 0 35px rgba(245,166,35,0.55),0 0 80px rgba(245,166,35,0.18),inset 0 0 30px rgba(245,166,35,0.06);
+}
+body.casino-mode .marq-name{
+  background:linear-gradient(180deg,#fff 0%,#f5c842 35%,#f0a020 65%,#a06000 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+/* Arcade cabinet extras: cooler neon style */
+body.arcade-mode .cab-marquee{
+  background:linear-gradient(180deg,#06001a,#09001f 60%,#06001a);
+  border-color:#9b7cff;
+  box-shadow:0 0 30px rgba(155,124,255,0.45),0 0 70px rgba(155,124,255,0.12),inset 0 0 25px rgba(155,124,255,0.05);
+}
+body.arcade-mode .marq-name{
+  background:linear-gradient(180deg,#fff 0%,#c8b2ff 40%,#9b7cff 70%,#6040cc 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+body.arcade-mode .marq-bulb{background:#9b7cff;box-shadow:0 0 6px #9b7cff,0 0 14px rgba(155,124,255,0.7);}
+body.arcade-mode .cab-screen-housing,body.arcade-mode .cab-control-panel{border-color:#9b7cff;}
+body.arcade-mode .cab-side-l::after,body.arcade-mode .cab-side-r::after{
+  background:linear-gradient(180deg,rgba(155,124,255,0.5),rgba(79,195,247,0.5),rgba(155,124,255,0.5));
+}
 
 html{scroll-behavior:smooth;}
 body{
@@ -52,6 +81,171 @@ nav{
 .nav-right{display:flex;gap:0.4rem;align-items:center;color:var(--muted);}
 .nav-age{color:#4fc3f7;font-weight:700;}
 
+/* ASCII TOGGLE */
+.ascii-toggle{
+  display:flex;align-items:center;gap:0;
+  border:1px solid rgba(255,255,255,0.15);
+  border-radius:4px;overflow:hidden;
+  font-size:0.58rem;letter-spacing:0.12em;
+  cursor:pointer;user-select:none;margin-left:0.8rem;
+}
+.ascii-toggle .aopt{
+  padding:0.3rem 0.6rem;
+  transition:all 0.2s;
+  color:rgba(255,255,255,0.25);
+  background:transparent;
+  border:none;font-family:inherit;font-size:inherit;letter-spacing:inherit;cursor:pointer;
+}
+.ascii-toggle .aopt.active{
+  background:rgba(255,255,255,0.08);
+  color:#fff;
+}
+
+/* ASCII pipe background canvas */
+#ascii-bg{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  opacity:0;transition:opacity 0.6s;
+}
+body.ascii-mode #ascii-bg{opacity:1;}
+body.ascii-mode #stars,
+body.ascii-mode #mouse-light{opacity:0;transition:opacity 0.4s;}
+
+/* ══════════════════════════════════════════
+   ASCII MODE OVERRIDES  (white palette)
+   ══════════════════════════════════════════ */
+body.ascii-mode{
+  --accent:#ffffff;
+  --accent-dim:rgba(255,255,255,0.08);
+  --accent-glow:rgba(255,255,255,0.15);
+  --text:#ffffff;
+  --muted:rgba(255,255,255,0.38);
+  --border:rgba(255,255,255,0.12);
+  background:#0a0c0f!important;
+  color:#fff;
+}
+body.ascii-mode nav{
+  background:rgba(10,12,15,0.97)!important;
+  backdrop-filter:none;
+  border-bottom-color:rgba(255,255,255,0.1);
+}
+body.ascii-mode .nav-age{color:#fff;opacity:0.7;}
+
+/* ASCII hero — hide h1, show pre */
+.hero-ascii{display:none;}
+body.ascii-mode .hero h1{display:none;}
+body.ascii-mode .hero-ascii{
+  display:block;
+  color:#fff;
+  font-size:clamp(0.28rem,1.1vw,0.58rem);
+  line-height:1.15;
+  letter-spacing:0.02em;
+  white-space:pre;
+  text-align:center;
+  margin-bottom:1.2rem;
+  text-shadow:0 0 12px rgba(255,255,255,0.25);
+  opacity:0;
+  animation:fadeUp 0.6s ease 0.1s forwards;
+}
+
+/* ASCII hero-tags */
+body.ascii-mode .hero-tags{
+  font-size:0.72rem;
+  color:rgba(255,255,255,0.55);
+  gap:0;
+  animation:none;opacity:1;
+}
+body.ascii-mode .hero-tags::before{content:'[ ';}
+body.ascii-mode .hero-tags::after{content:' ]';}
+body.ascii-mode .hero-tags .sep{color:rgba(255,255,255,0.2);margin:0 0.4rem;}
+
+/* ASCII hero desc */
+body.ascii-mode .hero-desc{
+  color:rgba(255,255,255,0.4);
+  animation:none;opacity:1;
+}
+body.ascii-mode .hero-desc::before{content:'// ';}
+
+/* ASCII contact button */
+body.ascii-mode .btn-kontakt{
+  border-color:rgba(255,255,255,0.3);
+  color:#fff;
+  letter-spacing:0.2em;
+  animation:none;opacity:1;
+}
+body.ascii-mode .btn-kontakt::before{content:'[ ';}
+body.ascii-mode .btn-kontakt::after{content:' ]';}
+body.ascii-mode .btn-kontakt:hover{background:rgba(255,255,255,0.06);border-color:#fff;}
+
+/* ASCII rule */
+body.ascii-mode .rule{border-top-color:rgba(255,255,255,0.08);}
+
+/* ASCII section label */
+body.ascii-mode .sec-label{color:rgba(255,255,255,0.5);letter-spacing:0.22em;}
+body.ascii-mode .sec-label::before{content:'>> ';}
+
+/* ASCII skills */
+body.ascii-mode .skill{color:rgba(255,255,255,0.45);}
+body.ascii-mode .skill:hover{color:#fff;}
+body.ascii-mode .skill.blue{color:rgba(255,255,255,0.7);}
+body.ascii-mode .skill.purple{color:rgba(255,255,255,0.55);}
+body.ascii-mode .skill-dot{color:rgba(255,255,255,0.12);}
+
+/* ASCII skills box */
+body.ascii-mode .skills-row{
+  border:1px solid rgba(255,255,255,0.1);
+  padding:0.8rem 1.2rem;position:relative;
+}
+body.ascii-mode .skills-row::before{
+  content:'┌─ STACK ──────────────────────┐';
+  position:absolute;top:-0.7rem;left:50%;transform:translateX(-50%);
+  font-size:0.55rem;color:rgba(255,255,255,0.25);white-space:nowrap;
+  background:#0a0c0f;padding:0 0.3rem;
+}
+body.ascii-mode .skills-row::after{
+  content:'└──────────────────────────────┘';
+  position:absolute;bottom:-0.7rem;left:50%;transform:translateX(-50%);
+  font-size:0.55rem;color:rgba(255,255,255,0.25);white-space:nowrap;
+  background:#0a0c0f;padding:0 0.3rem;
+}
+
+/* ASCII footer */
+body.ascii-mode footer{border-top-color:rgba(255,255,255,0.08);}
+body.ascii-mode footer,body.ascii-mode footer a{color:rgba(255,255,255,0.3);}
+body.ascii-mode footer a:hover{color:#fff;}
+
+/* ASCII arcade machine — keep its own glow, just tint white */
+body.ascii-mode .cab-marquee{
+  background:linear-gradient(180deg,#0e0c10,#08060a);
+  border-color:rgba(255,255,255,0.3);
+  box-shadow:0 0 20px rgba(255,255,255,0.06),inset 0 0 20px rgba(255,255,255,0.02);
+}
+body.ascii-mode .marq-name{
+  background:none;-webkit-text-fill-color:unset;
+  color:#fff;text-shadow:0 0 14px rgba(255,255,255,0.3);
+  font-size:1.1rem;letter-spacing:0.4em;
+}
+body.ascii-mode .marq-sub{color:rgba(255,255,255,0.3);}
+body.ascii-mode .marq-bulb{background:rgba(255,255,255,0.6);box-shadow:0 0 5px rgba(255,255,255,0.5);}
+body.ascii-mode .cab-screen-housing,
+body.ascii-mode .cab-control-panel{border-color:rgba(255,255,255,0.18);background:#050507;}
+body.ascii-mode .cab-side-l,body.ascii-mode .cab-side-r{border-color:rgba(255,255,255,0.1);}
+body.ascii-mode .cab-side-l::after,body.ascii-mode .cab-side-r::after{
+  background:linear-gradient(180deg,rgba(255,255,255,0.25),rgba(255,255,255,0.1),rgba(255,255,255,0.25));
+}
+body.ascii-mode .joystick-stick{background:radial-gradient(circle at 35% 28%,#333,#0d0d0d);}
+body.ascii-mode .arc-btn.red,body.ascii-mode .arc-btn.yellow,
+body.ascii-mode .arc-btn.blue,body.ascii-mode .arc-btn.green{
+  border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.5);
+}
+body.ascii-mode .game-info-bar{border-top-color:rgba(255,255,255,0.1);}
+body.ascii-mode .game-name-display{color:#fff;}
+body.ascii-mode .insert-coin{color:rgba(255,255,255,0.12);}
+body.ascii-mode .nav-dot.active{background:#fff;border-color:#fff;box-shadow:0 0 6px rgba(255,255,255,0.5);}
+body.ascii-mode .cab-base{border-color:rgba(255,255,255,0.15);}
+body.ascii-mode .arcade-nav-btn{border-color:rgba(255,255,255,0.35);color:rgba(255,255,255,0.7);}
+
+/* Keep casino/arcade-mode from overriding ascii background/text */
+body.ascii-mode.casino-mode,body.ascii-mode.arcade-mode{background:#0a0c0f!important;color:#fff;}
 /* PAGE WRAPPER — centered */
 .page{
   max-width:720px;
@@ -125,93 +319,193 @@ from{opacity:0;transform:translateY(20px);}}
 .skill-dot{color:var(--border);}
 
 /* =============================================
-   ARCADE MACHINE
+   ARCADE MACHINE — PHYSICAL CABINET
    ============================================= */
 .arcade-wrap{
   padding:3.5rem 0 5rem;
   display:flex;flex-direction:column;align-items:center;
 }
-.arcade-desc{font-size:0.68rem;color:var(--muted);margin-bottom:2.5rem;letter-spacing:0.05em;}
 
-/* The cabinet */
-.cabinet{
-  width:100%;
-  max-width:560px;
-  background:linear-gradient(180deg,#111 0%,#0d0d0d 40%,#0a0a0a 100%);
-  border:1.5px solid var(--accent);
-  border-radius:18px 18px 8px 8px;
+/* ── OUTER CABINET SHELL ── */
+.cab-outer{
+  width:100%;max-width:600px;
+  position:relative;
+  filter:drop-shadow(0 40px 80px rgba(0,0,0,0.95)) drop-shadow(0 0 60px rgba(155,124,255,0.08));
+}
+/* Side arm panels */
+.cab-side-l,.cab-side-r{
+  position:absolute;
+  top:54px;bottom:20px;width:16px;
+  background:linear-gradient(180deg,#1a0a2e,#0d0518,#1a0a2e);
+  border:1px solid rgba(155,124,255,0.25);
+  z-index:-1;
+}
+.cab-side-l{left:-14px;border-radius:4px 0 0 4px;}
+.cab-side-r{right:-14px;border-radius:0 4px 4px 0;}
+/* Side stripe accents */
+.cab-side-l::after,.cab-side-r::after{
+  content:'';position:absolute;inset:10% 20%;
+  background:linear-gradient(180deg,rgba(155,124,255,0.5),rgba(245,166,35,0.5),rgba(155,124,255,0.5));
+  border-radius:2px;
+}
+
+/* ── MARQUEE ── */
+.cab-marquee{
+  background:linear-gradient(180deg,#0c0814,#080510 60%,#060410);
+  border:2.5px solid var(--accent);
+  border-bottom:none;
+  border-radius:16px 16px 0 0;
+  padding:0.5rem 1rem 0.4rem;
+  text-align:center;
+  position:relative;overflow:hidden;
   box-shadow:
-    0 0 0 1px rgba(0,0,0,0.8),
-    0 0 40px var(--accent-glow),
-    0 0 80px rgba(0,0,0,0.8),
-    inset 0 1px 0 rgba(255,255,255,0.05);
-  overflow:hidden;
-  transition:border-color 0.4s, box-shadow 0.4s;
+    0 0 35px rgba(245,166,35,0.55),
+    0 0 80px rgba(245,166,35,0.18),
+    inset 0 0 30px rgba(245,166,35,0.06);
+}
+.cab-marquee::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(90deg,transparent 0,transparent 50px,rgba(245,166,35,0.03) 50px,rgba(245,166,35,0.03) 51px);
+}
+.marq-lights{display:flex;justify-content:space-between;padding:0 0.2rem;position:relative;z-index:1;}
+.marq-bulb{
+  width:8px;height:8px;border-radius:50%;
+  background:#f5a623;
+  box-shadow:0 0 6px #f5a623,0 0 14px rgba(245,166,35,0.7);
+  animation:bulbFlash 2.2s ease infinite;
+}
+.marq-bulb:nth-child(2n){animation-delay:0.7s;}
+.marq-bulb:nth-child(3n){animation-delay:1.4s;}
+@keyframes bulbFlash{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.25;transform:scale(0.85);}}
+.marq-name{
+  font-size:clamp(1.3rem,4vw,1.8rem);font-weight:900;letter-spacing:0.2em;
+  background:linear-gradient(180deg,#fff 0%,#f5c842 35%,#f0a020 65%,#a06000 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  position:relative;z-index:1;line-height:1;margin:0.2rem 0;
+}
+.marq-sub{
+  font-size:0.48rem;letter-spacing:0.55em;color:rgba(255,255,255,0.4);
+  position:relative;z-index:1;margin-bottom:0.2rem;
+}
+
+/* ── SCREEN HOUSING ── */
+.cab-screen-housing{
+  background:linear-gradient(180deg,#0f0d14,#0a0810);
+  border-left:2.5px solid var(--accent);
+  border-right:2.5px solid var(--accent);
+  padding:1rem 1.2rem 0.8rem;
   position:relative;
 }
-
-/* Cabinet top arch */
-.cabinet-header{
-  background:linear-gradient(180deg,rgba(255,255,255,0.04),transparent);
-  border-bottom:1px solid var(--accent);
-  padding:0.6rem 1rem;
-  display:flex;align-items:center;justify-content:space-between;
-  transition:border-color 0.4s;
+/* Decorative side stripes inside housing */
+.cab-screen-housing::before,.cab-screen-housing::after{
+  content:'';position:absolute;top:8px;bottom:8px;width:5px;
+  background:linear-gradient(180deg,rgba(155,124,255,0.35),rgba(245,166,35,0.35),rgba(155,124,255,0.35));
+  border-radius:2px;
 }
-.cab-dots{display:flex;gap:5px;}
-.cab-dot{width:10px;height:10px;border-radius:50%;}
-.cab-dot-r{background:#ff5f57;}.cab-dot-y{background:#ffbd2e;}.cab-dot-g{background:#28c840;}
-.cab-title{
-  font-size:0.65rem;letter-spacing:0.22em;
-  color:var(--accent);font-weight:700;
-  transition:color 0.4s;
-}
-.cab-ver{font-size:0.6rem;color:rgba(255,255,255,0.2);}
+.cab-screen-housing::before{left:8px;}
+.cab-screen-housing::after{right:8px;}
 
-/* CRT SCREEN */
+/* ── CRT BEZEL ── */
 .crt-bezel{
-  margin:0.8rem;
   background:#000;
-  border-radius:10px;
-  border:2px solid rgba(255,255,255,0.06);
+  border-radius:8px;
+  border:4px solid #111;
+  outline:1px solid rgba(255,255,255,0.04);
   box-shadow:
-    inset 0 0 30px rgba(0,0,0,0.9),
-    inset 0 0 60px rgba(0,0,0,0.5),
-    0 0 20px rgba(0,0,0,0.8);
-  position:relative;
-  overflow:hidden;
+    inset 0 0 50px rgba(0,0,0,0.97),
+    inset 0 0 100px rgba(0,0,0,0.6),
+    0 0 0 2px #0a0a0a,
+    0 6px 24px rgba(0,0,0,0.9);
+  position:relative;overflow:hidden;
 }
-/* CRT scanlines */
+/* Scanlines */
 .crt-bezel::before{
   content:'';position:absolute;inset:0;
-  background:repeating-linear-gradient(
-    0deg,
-    transparent,transparent 2px,
-    rgba(0,0,0,0.18) 2px,rgba(0,0,0,0.18) 4px
-  );
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.15) 2px,rgba(0,0,0,0.15) 4px);
   pointer-events:none;z-index:20;
 }
-/* CRT vignette */
+/* Vignette */
 .crt-bezel::after{
   content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse 90% 90% at 50% 50%,transparent 60%,rgba(0,0,0,0.55) 100%);
+  background:radial-gradient(ellipse 85% 85% at 50% 50%,transparent 50%,rgba(0,0,0,0.75) 100%);
   pointer-events:none;z-index:21;
 }
-/* CRT phosphor tint */
-.crt-screen{
-  min-height:380px;
+
+/* ── POWER-OFF STATE ── */
+#boot-screen{height:380px;background:#000;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.power-off-state{display:flex;flex-direction:column;align-items:center;gap:1.4rem;text-align:center;}
+.power-btn{
+  width:84px;height:84px;border-radius:50%;
+  border:3px solid rgba(80,255,80,0.12);
+  background:radial-gradient(circle at 38% 32%,#181818,#050505);
+  color:rgba(80,255,80,0.18);
+  font-size:2.1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 0 10px rgba(0,0,0,0.3),0 5px 24px rgba(0,0,0,0.95),inset 0 1px 0 rgba(255,255,255,0.04);
+  transition:all 0.25s;
+  animation:powerPulse 3.5s ease infinite;
   position:relative;
-  background:#050508;
+}
+.power-btn::after{
+  content:'';position:absolute;inset:-6px;border-radius:50%;
+  border:1px solid rgba(80,255,80,0.06);
+  animation:powerRing 3.5s ease infinite;
+}
+@keyframes powerPulse{
+  0%,100%{border-color:rgba(80,255,80,0.12);color:rgba(80,255,80,0.18);}
+  50%{border-color:rgba(80,255,80,0.45);color:rgba(80,255,80,0.55);box-shadow:0 0 0 10px rgba(0,0,0,0.3),0 5px 24px rgba(0,0,0,0.95),0 0 40px rgba(80,255,80,0.12);}
+}
+@keyframes powerRing{
+  0%,100%{opacity:0;transform:scale(1);}
+  50%{opacity:1;transform:scale(1.1);}
+}
+.power-btn:hover{
+  border-color:rgba(80,255,80,0.8)!important;
+  color:rgba(80,255,80,1)!important;
+  box-shadow:0 0 0 10px rgba(0,0,0,0.3),0 5px 24px rgba(0,0,0,0.95),0 0 50px rgba(80,255,80,0.25)!important;
+  animation:none!important;
+  transform:scale(1.05);
+}
+.power-off-txt{font-size:0.5rem;letter-spacing:0.35em;color:rgba(255,255,255,0.08);text-transform:uppercase;line-height:1.8;}
+
+/* ── BOOT TERMINAL ── */
+#boot-terminal{
+  width:100%;height:380px;
+  padding:1.2rem 1.5rem;
+  background:#000;
+  color:#00ff41;
+  font-family:'Source Code Pro',monospace;
+  font-size:0.62rem;line-height:1.75;
+  display:none;box-sizing:border-box;
+  overflow-y:auto;overflow-x:hidden;
+}
+#boot-terminal .boot-line{display:block;white-space:pre;}
+#boot-terminal .boot-ok{color:#00ff41;}
+#boot-terminal .boot-err{color:#ff4444;}
+#boot-terminal .boot-dim{color:rgba(0,255,65,0.35);}
+#boot-terminal .boot-title{color:#f5a623;font-size:0.72rem;letter-spacing:0.05em;}
+#boot-terminal .boot-bar{color:#9b7cff;}
+#boot-terminal .boot-ascii{color:#f5a623;font-size:0.58rem;line-height:1.3;}
+#boot-terminal .boot-ready{color:#fff;font-size:0.85rem;letter-spacing:0.2em;animation:blinkCursor 0.9s step-end infinite;}
+@keyframes blinkCursor{0%,100%{opacity:1;}50%{opacity:0;}}
+@keyframes crtOn{
+  0%{opacity:0;filter:brightness(4) blur(6px) scaleY(0.02);}
+  15%{opacity:1;filter:brightness(2) blur(2px) scaleY(0.05);}
+  40%{filter:brightness(1.3) blur(0px) scaleY(1);}
+  60%{filter:brightness(1.1);}
+  80%{filter:brightness(0.85);}
+  100%{filter:brightness(1);}
 }
 
-/* Game frames */
-.game-frame{display:none;width:100%;min-height:380px;}
-.game-frame.active{display:flex;flex-direction:column;align-items:center;justify-content:center;}
+/* ── GAME SCREEN (post-boot) ── */
+#game-screen{display:none;}
+.crt-screen{height:380px;position:relative;background:#050508;overflow:hidden;}
+.game-frame{display:none;width:100%;height:380px;}
+.game-frame.active{display:flex;flex-direction:column;align-items:center;justify-content:center;overflow-y:auto;}
 
-/* INSERT COIN strip */
+/* INSERT COIN */
 .insert-coin{
-  padding:0.35rem 0;
-  text-align:center;
+  padding:0.35rem 0;text-align:center;
   font-size:0.55rem;letter-spacing:0.3em;
   color:rgba(255,255,255,0.12);
   border-top:1px solid rgba(255,255,255,0.04);
@@ -219,61 +513,157 @@ from{opacity:0;transform:translateY(20px);}}
 }
 @keyframes blink{0%,100%{opacity:0.4;}50%{opacity:1;}}
 
-/* GAME INFO BAR */
+/* ── GAME INFO BAR ── */
 .game-info-bar{
-  background:rgba(0,0,0,0.6);
+  background:rgba(0,0,0,0.75);
   border-top:1px solid var(--accent);
-  padding:0.6rem 1rem;
+  padding:0.5rem 1rem;
   display:flex;align-items:center;justify-content:space-between;
   transition:border-color 0.4s;
 }
-.game-counter{font-size:0.55rem;letter-spacing:0.18em;color:var(--muted);}
-.game-name-display{
-  font-size:0.8rem;font-weight:700;letter-spacing:0.12em;
-  color:var(--accent);transition:color 0.4s;
-}
+.game-counter{font-size:0.52rem;letter-spacing:0.18em;color:var(--muted);}
+.game-name-display{font-size:0.78rem;font-weight:700;letter-spacing:0.12em;color:var(--accent);transition:color 0.4s;}
 
-/* ARCADE BUTTONS PANEL */
-.buttons-panel{
-  background:linear-gradient(180deg,#0e0e0e,#080808);
-  border-top:1px solid rgba(255,255,255,0.05);
-  padding:1.2rem 2rem 1.4rem;
-  display:flex;align-items:center;justify-content:space-between;
-  gap:1rem;
-}
-
-/* Nav buttons (big round arcade buttons) */
-.arcade-nav-btn{
-  width:52px;height:52px;border-radius:50%;
-  border:2px solid var(--accent);
-  background:radial-gradient(circle at 38% 38%,rgba(255,255,255,0.12),rgba(0,0,0,0.6));
-  color:var(--accent);
-  font-size:1.1rem;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 12px rgba(0,0,0,0.6),0 0 12px var(--accent-glow),inset 0 1px rgba(255,255,255,0.1);
-  transition:all 0.15s;
+/* ── CONTROL PANEL ── */
+.cab-control-panel{
+  background:linear-gradient(180deg,#141218,#0e0c12,#0a0810);
+  border-left:2.5px solid var(--accent);
+  border-right:2.5px solid var(--accent);
+  border-bottom:2.5px solid var(--accent);
+  border-radius:0 0 0 0;
+  padding:1rem 1.4rem 1.3rem;
   position:relative;
-  flex-shrink:0;
+  transform:perspective(600px) rotateX(-4deg);
+  transform-origin:top center;
 }
-.arcade-nav-btn:hover{transform:scale(1.08);box-shadow:0 6px 18px rgba(0,0,0,0.7),0 0 20px var(--accent-glow),inset 0 1px rgba(255,255,255,0.15);}
-.arcade-nav-btn:active{transform:scale(0.94) translateY(2px);box-shadow:0 2px 6px rgba(0,0,0,0.8),0 0 8px var(--accent-glow);}
-.btn-label{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:0.5rem;letter-spacing:0.12em;color:var(--muted);white-space:nowrap;}
+/* Panel top ridge glow */
+.cab-control-panel::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent 5%,rgba(245,166,35,0.6) 30%,rgba(245,166,35,0.8) 50%,rgba(245,166,35,0.6) 70%,transparent 95%);
+}
+/* Panel metal texture */
+.cab-control-panel::after{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(45deg,transparent,transparent 3px,rgba(255,255,255,0.008) 3px,rgba(255,255,255,0.008) 4px);
+  pointer-events:none;
+}
+.panel-top-row{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:0.9rem;
+  position:relative;z-index:2;
+}
+.coin-slot-area{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.coin-slot{
+  width:44px;height:5px;
+  background:#000;
+  border:1px solid rgba(255,255,255,0.18);
+  border-radius:1px;
+  box-shadow:inset 0 1px 4px rgba(0,0,0,0.9),0 1px 0 rgba(255,255,255,0.05);
+}
+.coin-slot-label{font-size:0.42rem;letter-spacing:0.22em;color:rgba(255,255,255,0.2);text-transform:uppercase;}
 
-/* Dots in the middle */
-.nav-dots-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:0.5rem;}
-.nav-dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;max-width:260px;}
+.panel-game-name{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+}
+.mode-pills{display:flex;gap:5px;}
+.pill{width:12px;height:12px;border-radius:2px;}
+.cab-ver-small{font-size:0.48rem;letter-spacing:0.15em;color:rgba(255,255,255,0.12);}
+
+.controls-row{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:0.6rem;
+  position:relative;z-index:2;
+}
+
+/* JOYSTICK */
+.joystick-wrap{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;}
+.joystick-gate{
+  width:60px;height:60px;border-radius:6px;
+  background:radial-gradient(circle at 40% 35%,#1e1e1e,#080808);
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow:inset 0 3px 8px rgba(0,0,0,0.9),0 2px 4px rgba(0,0,0,0.6);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.joystick-gate::before,.joystick-gate::after{content:'';position:absolute;background:rgba(255,255,255,0.04);}
+.joystick-gate::before{left:50%;top:6px;bottom:6px;width:1px;transform:translateX(-50%);}
+.joystick-gate::after{top:50%;left:6px;right:6px;height:1px;transform:translateY(-50%);}
+.joystick-stick{
+  width:26px;height:26px;border-radius:50%;
+  background:radial-gradient(circle at 35% 28%,#666,#1a1a1a);
+  border:2px solid rgba(255,255,255,0.12);
+  box-shadow:0 3px 8px rgba(0,0,0,0.9),inset 0 1px 0 rgba(255,255,255,0.08);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:transform 0.08s;
+  position:relative;z-index:1;
+}
+.joystick-stick::after{content:'';width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#999,#444);box-shadow:0 1px 3px rgba(0,0,0,0.6);}
+.joystick-stick:hover{transform:translate(2px,2px);}
+.joystick-label{font-size:0.4rem;letter-spacing:0.15em;color:rgba(255,255,255,0.18);}
+
+/* NAV ARROWS */
+.arcade-nav-btn{
+  width:50px;height:50px;border-radius:50%;
+  border:2px solid var(--accent);
+  background:radial-gradient(circle at 38% 35%,rgba(255,255,255,0.1),rgba(0,0,0,0.7));
+  color:var(--accent);
+  font-size:1.05rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 5px 14px rgba(0,0,0,0.7),0 0 14px var(--accent-glow),inset 0 1px rgba(255,255,255,0.08);
+  transition:all 0.13s;
+  position:relative;flex-shrink:0;
+}
+.arcade-nav-btn:hover{transform:scale(1.1) translateY(-1px);box-shadow:0 8px 20px rgba(0,0,0,0.8),0 0 24px var(--accent-glow);}
+.arcade-nav-btn:active{transform:scale(0.93) translateY(2px);box-shadow:0 2px 6px rgba(0,0,0,0.9);}
+.btn-label{position:absolute;bottom:-17px;left:50%;transform:translateX(-50%);font-size:0.45rem;letter-spacing:0.12em;color:rgba(255,255,255,0.2);white-space:nowrap;}
+
+/* NAV DOTS */
+.nav-btns-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:0.5rem;}
+.nav-dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;max-width:200px;}
 .nav-dot{
-  width:8px;height:8px;border-radius:50%;
+  width:7px;height:7px;border-radius:50%;
   background:rgba(255,255,255,0.1);
   cursor:pointer;transition:all 0.2s;
-  border:1px solid rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.07);
 }
-.nav-dot.active{background:var(--accent);border-color:var(--accent);box-shadow:0 0 6px var(--accent);}
-.nav-dot:hover:not(.active){background:rgba(255,255,255,0.25);}
+.nav-dot.active{background:var(--accent);border-color:var(--accent);box-shadow:0 0 7px var(--accent);}
+.nav-dot:hover:not(.active){background:rgba(255,255,255,0.28);}
 
-/* Color pills */
-.mode-pills{display:flex;gap:5px;}
-.pill{width:14px;height:14px;border-radius:3px;}
+/* ACTION BUTTONS (decorative) */
+.action-btns-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;flex-shrink:0;}
+.arc-btn{
+  width:42px;height:42px;border-radius:50%;
+  border:2px solid;
+  font-size:0.62rem;font-weight:700;letter-spacing:0.05em;cursor:default;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 5px 10px rgba(0,0,0,0.7),inset 0 1px rgba(255,255,255,0.1);
+  background:radial-gradient(circle at 35% 30%,rgba(255,255,255,0.12),rgba(0,0,0,0.6));
+  position:relative;
+}
+.arc-btn.red{border-color:#ff4444;color:#ff4444;box-shadow:0 5px 10px rgba(0,0,0,0.7),0 0 12px rgba(255,68,68,0.15);}
+.arc-btn.yellow{border-color:#f5c842;color:#f5c842;box-shadow:0 5px 10px rgba(0,0,0,0.7),0 0 12px rgba(245,200,66,0.15);}
+.arc-btn.blue{border-color:#4fc3f7;color:#4fc3f7;box-shadow:0 5px 10px rgba(0,0,0,0.7),0 0 12px rgba(79,195,247,0.15);}
+.arc-btn.green{border-color:#69f0ae;color:#69f0ae;box-shadow:0 5px 10px rgba(0,0,0,0.7),0 0 12px rgba(105,240,174,0.15);}
+
+/* Cabinet base */
+.cab-base-wrap{
+  display:flex;flex-direction:column;align-items:center;
+}
+.cab-base{
+  width:calc(100% - 10px);height:14px;
+  background:linear-gradient(180deg,#0d0c10,#060508);
+  border:2.5px solid var(--accent-glow);
+  border-top:none;
+  box-shadow:0 8px 24px rgba(0,0,0,0.8);
+}
+.cab-foot-row{display:flex;justify-content:space-between;padding:0 40px;margin-top:0;}
+.cab-foot{
+  width:28px;height:12px;
+  background:linear-gradient(180deg,#111,#080808);
+  border:1px solid rgba(255,255,255,0.05);
+  border-top:none;border-radius:0 0 5px 5px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.7);
+}
 
 /* FOOTER */
 footer{
@@ -576,6 +966,7 @@ footer a:hover{color:#fff;}
 
 <canvas id="stars"></canvas>
 <canvas id="mouse-light"></canvas>
+<canvas id="ascii-bg"></canvas>
 
 <nav>
   <div class="nav-name">Ben Bliem</div>
@@ -583,6 +974,10 @@ footer a:hover{color:#fff;}
     <span class="nav-age">18</span>
     <span>·</span>
     <span>HTBLuVA Salzburg</span>
+    <div class="ascii-toggle" id="ascii-toggle">
+      <button class="aopt active" data-mode="std">STD</button>
+      <button class="aopt" data-mode="asc">ASC</button>
+    </div>
   </div>
 </nav>
 
@@ -591,13 +986,23 @@ footer a:hover{color:#fff;}
   <!-- HERO -->
   <div class="hero">
     <h1>Ben Bliem</h1>
+    <pre class="hero-ascii">
+ ██████╗ ███████╗███╗  ██╗    ██████╗ ██╗     ██╗███████╗███╗   ███╗
+ ██╔══██╗██╔════╝████╗ ██║    ██╔══██╗██║     ██║██╔════╝████╗ ████║
+ ██████╔╝█████╗  ██╔██╗██║    ██████╔╝██║     ██║█████╗  ██╔████╔██║
+ ██╔══██╗██╔══╝  ██║╚████║    ██╔══██╗██║     ██║██╔══╝  ██║╚██╔╝██║
+ ██████╔╝███████╗██║ ╚███║    ██████╔╝███████╗██║███████╗██║ ╚═╝ ██║
+ ╚═════╝ ╚══════╝╚═╝  ╚══╝    ╚═════╝ ╚══════╝╚═╝╚══════╝╚═╝     ╚═╝
+ ─────────────────────────────────────────────────────────────────────
+           [ Schüler · KI-Enthusiast · Gamer ]  //  Salzburg, AT
+</pre>
     <div class="hero-tags">
       <span>Schüler (Informatik)</span><span class="sep">·</span>
       <span>KI-Enthusiast</span><span class="sep">·</span>
       <span>Gamer</span>
     </div>
     <p class="hero-desc">Betreibe Minecraft-Modserver &amp; Proxmox-Homelab.</p>
-    <a href="benedikt.bliem06@htl-salzburg.ac.at" class="btn-kontakt">Kontakt</a>
+    <a href="/cdn-cgi/l/email-protection#a0c2c5cec2ccc9c5cde0c2c1d3c594948ec1d0d0" class="btn-kontakt">Kontakt</a>
   </div>
 
   <hr class="rule">
@@ -623,51 +1028,74 @@ footer a:hover{color:#fff;}
   <!-- ARCADE -->
   <div class="arcade-wrap">
     <p class="sec-label">Games</p>
-    <p class="arcade-desc">14 Browser-Spiele, direkt spielbar.</p>
 
-    <div class="cabinet" id="cabinet">
+    <div class="cab-outer">
 
-      <!-- Cabinet header -->
-      <div class="cabinet-header">
-        <div class="cab-dots">
-          <div class="cab-dot cab-dot-r"></div>
-          <div class="cab-dot cab-dot-y"></div>
-          <div class="cab-dot cab-dot-g"></div>
+      <!-- Side panels -->
+      <div class="cab-side-l"></div>
+      <div class="cab-side-r"></div>
+
+      <!-- MARQUEE -->
+      <div class="cab-marquee">
+        <div class="marq-lights">
+          <div class="marq-bulb"></div><div class="marq-bulb"></div><div class="marq-bulb"></div>
+          <div class="marq-bulb"></div><div class="marq-bulb"></div><div class="marq-bulb"></div>
+          <div class="marq-bulb"></div><div class="marq-bulb"></div><div class="marq-bulb"></div>
+          <div class="marq-bulb"></div><div class="marq-bulb"></div><div class="marq-bulb"></div>
         </div>
-        <div class="cab-title" id="cab-title">BEN BLIEM · ARCADE</div>
-        <div class="cab-ver" id="cab-ver">v1.0</div>
+        <div class="marq-name">BEN BLIEM</div>
+        <div class="marq-sub">ARCADE SYSTEM &nbsp;·&nbsp; 14 GAMES &nbsp;·&nbsp; EST. 2006</div>
+        <div class="marq-lights">
+          <div class="marq-bulb"></div><div class="marq-bulb"></div><div class="marq-bulb"></div>
+          <div class="marq-bulb"></div><div class="marq-bulb"></div><div class="marq-bulb"></div>
+          <div class="marq-bulb"></div><div class="marq-bulb"></div><div class="marq-bulb"></div>
+          <div class="marq-bulb"></div><div class="marq-bulb"></div><div class="marq-bulb"></div>
+        </div>
       </div>
 
-      <!-- CRT Screen -->
-      <div class="crt-bezel">
-        <div class="crt-screen">
+      <!-- SCREEN HOUSING -->
+      <div class="cab-screen-housing">
+        <div class="crt-bezel">
 
-          <!-- GAME 1: SLOT -->
-          <div class="game-frame active" id="game-slot">
-            <div id="gslot" class="game-base">
-              <div class="slot-stats">
-                <div class="g-stat">CREDITS <span class="g-val gold" id="sl-cred">100</span></div>
-                <div class="g-stat">EINSATZ <span class="g-val" id="sl-bet">5</span></div>
-                <div class="g-stat">GEWINN <span class="g-val cyan" id="sl-win">0</span></div>
-              </div>
-              <div class="slot-reels-wrap">
-                <div class="slot-winline"></div>
-                <div class="slot-reels-row">
-                  <div class="slot-rc" id="sl-rc0"><div class="slot-reel" id="sl-r0"></div></div>
-                  <div class="slot-rc" id="sl-rc1"><div class="slot-reel" id="sl-r1"></div></div>
-                  <div class="slot-rc" id="sl-rc2"><div class="slot-reel" id="sl-r2"></div></div>
+          <!-- POWER-OFF + BOOT STATE -->
+          <div id="boot-screen">
+            <div class="power-off-state" id="power-off-state">
+              <button class="power-btn" id="power-btn">⏻</button>
+              <div class="power-off-txt">POWER OFF<br>CLICK TO START</div>
+            </div>
+            <pre id="boot-terminal"></pre>
+          </div>
+
+          <!-- GAME SCREEN — hidden until boot -->
+          <div id="game-screen">
+            <div class="crt-screen">
+
+              <!-- GAME 1: SLOT -->
+              <div class="game-frame active" id="game-slot">
+                <div id="gslot" class="game-base">
+                  <div class="slot-stats">
+                    <div class="g-stat">CREDITS <span class="g-val gold" id="sl-cred">100</span></div>
+                    <div class="g-stat">EINSATZ <span class="g-val" id="sl-bet">5</span></div>
+                    <div class="g-stat">GEWINN <span class="g-val cyan" id="sl-win">0</span></div>
+                  </div>
+                  <div class="slot-reels-wrap">
+                    <div class="slot-winline"></div>
+                    <div class="slot-reels-row">
+                      <div class="slot-rc" id="sl-rc0"><div class="slot-reel" id="sl-r0"></div></div>
+                      <div class="slot-rc" id="sl-rc1"><div class="slot-reel" id="sl-r1"></div></div>
+                      <div class="slot-rc" id="sl-rc2"><div class="slot-reel" id="sl-r2"></div></div>
+                    </div>
+                  </div>
+                  <div class="g-msg" id="sl-msg">Viel Glück!</div>
+                  <button class="slot-spin-btn" id="sl-spin">🎰 SPIN</button>
+                  <div class="slot-bet-row">
+                    <button class="g-btn sm" id="sl-bm">−</button>
+                    <div class="g-stat">BET <span class="g-val" id="sl-bet2">5</span></div>
+                    <button class="g-btn sm" id="sl-bp">+</button>
+                  </div>
+                  <div class="slot-hint">3 gleiche = GEWINN &nbsp;·&nbsp; <span>💎💎💎</span> = JACKPOT</div>
                 </div>
               </div>
-              <div class="g-msg" id="sl-msg">Viel Glück!</div>
-              <button class="slot-spin-btn" id="sl-spin">🎰 SPIN</button>
-              <div class="slot-bet-row">
-                <button class="g-btn sm" id="sl-bm">−</button>
-                <div class="g-stat">BET <span class="g-val" id="sl-bet2">5</span></div>
-                <button class="g-btn sm" id="sl-bp">+</button>
-              </div>
-              <div class="slot-hint">3 gleiche = GEWINN &nbsp;·&nbsp; <span>💎💎💎</span> = JACKPOT</div>
-            </div>
-          </div>
 
           <!-- GAME 2: BLACKJACK -->
           <div class="game-frame" id="game-bj">
@@ -931,42 +1359,92 @@ footer a:hover{color:#fff;}
           </div>
 
         </div><!-- /crt-screen -->
-        <div class="insert-coin">— INSERT COIN —</div>
-      </div><!-- /crt-bezel -->
+              <div class="insert-coin">— INSERT COIN —</div>
 
-      <!-- Game info bar -->
-      <div class="game-info-bar">
-        <div class="game-counter" id="gctr">SPIEL 1/14</div>
-        <div class="game-name-display" id="gname">🎰 SLOT MACHINE</div>
-      </div>
+              <!-- Game info bar inside game screen -->
+              <div class="game-info-bar" id="game-info-bar">
+                <div class="game-counter" id="gctr">SPIEL 1/14</div>
+                <div class="game-name-display" id="gname">🎰 SLOT MACHINE</div>
+              </div>
 
-      <!-- Arcade buttons panel -->
-      <div class="buttons-panel">
-        <div style="position:relative;">
-          <button class="arcade-nav-btn" id="btn-prev">◀</button>
-          <span class="btn-label">ZURÜCK</span>
+            </div><!-- /game-screen -->
+
+          </div><!-- /crt-bezel -->
+        </div><!-- /cab-screen-housing -->
+
+        <!-- CONTROL PANEL -->
+        <div class="cab-control-panel">
+
+          <!-- Top row: coin slot / game info / version -->
+          <div class="panel-top-row">
+            <div class="coin-slot-area">
+              <div class="coin-slot"></div>
+              <div class="coin-slot-label">Insert Coin</div>
+            </div>
+            <div class="panel-game-name">
+              <div class="mode-pills" id="mode-pills"></div>
+              <div class="cab-ver-small" id="cab-ver">v1.0</div>
+            </div>
+            <div style="width:60px;"></div>
+          </div>
+
+          <!-- Main controls row -->
+          <div class="controls-row">
+
+            <!-- LEFT: Joystick -->
+            <div class="joystick-wrap">
+              <div class="joystick-gate">
+                <div class="joystick-stick"></div>
+              </div>
+              <div class="joystick-label">MOVE</div>
+            </div>
+
+            <!-- PREV button -->
+            <div style="position:relative;margin-bottom:18px;">
+              <button class="arcade-nav-btn" id="btn-prev">◀</button>
+              <span class="btn-label">ZURÜCK</span>
+            </div>
+
+            <!-- Center: nav dots -->
+            <div class="nav-btns-wrap">
+              <div class="nav-dots" id="nav-dots"></div>
+            </div>
+
+            <!-- NEXT button -->
+            <div style="position:relative;margin-bottom:18px;">
+              <button class="arcade-nav-btn" id="btn-next">▶</button>
+              <span class="btn-label">WEITER</span>
+            </div>
+
+            <!-- RIGHT: Action buttons -->
+            <div class="action-btns-grid">
+              <div class="arc-btn yellow">B</div>
+              <div class="arc-btn red">A</div>
+              <div class="arc-btn green">D</div>
+              <div class="arc-btn blue">C</div>
+            </div>
+
+          </div>
+        </div><!-- /cab-control-panel -->
+
+        <!-- Base -->
+        <div class="cab-base-wrap">
+          <div class="cab-base"></div>
+          <div class="cab-foot-row">
+            <div class="cab-foot"></div>
+            <div class="cab-foot"></div>
+          </div>
         </div>
 
-        <div class="nav-dots-wrap">
-          <div class="nav-dots" id="nav-dots"></div>
-          <div class="mode-pills" id="mode-pills"></div>
-        </div>
-
-        <div style="position:relative;">
-          <button class="arcade-nav-btn" id="btn-next">▶</button>
-          <span class="btn-label">WEITER</span>
-        </div>
-      </div>
-
-    </div><!-- /cabinet -->
-  </div>
+      </div><!-- /cab-outer -->
+    </div><!-- /arcade-wrap -->
 
   <hr class="rule">
 
   <footer>
     <span>Salzburg, Österreich</span>
-    <a href="benedikt.bliem08@htl-salzburg.ac.at"><span class="__cf_email__" data-cfemail="89ebece7ebe5e0ece4c9ebe8faecbdbda7e8f9f9">[email&#160;protected]</span></a>
-    <a href="https://github.com/BenedecusHTL/" target="_blank">GitHub</a>
+    <a href="/cdn-cgi/l/email-protection#16747378747a7f737b5674776573222238776666"><span class="__cf_email__" data-cfemail="89ebece7ebe5e0ece4c9ebe8faecbdbda7e8f9f9">[email&#160;protected]</span></a>
+    <a href="https://github.com/benbliem" target="_blank">GitHub</a>
   </footer>
 
 </div><!-- /page -->
@@ -1026,6 +1504,147 @@ footer a:hover{color:#fff;}
   draw();
 })();
 
+/* ===== ASCII PIPE BACKGROUND — animated screensaver ===== */
+(()=>{
+  const c=document.getElementById('ascii-bg'),ctx=c.getContext('2d');
+  const CELL=18;
+  let COLS,ROWS,grid,activePipes,tickInterval=null;
+
+  const COLORS=[
+    'rgba(255,255,255,0.55)',
+    'rgba(255,255,255,0.40)',
+    'rgba(255,255,255,0.65)',
+    'rgba(200,220,255,0.45)',
+    'rgba(180,255,220,0.35)',
+    'rgba(255,200,180,0.35)',
+    'rgba(180,200,255,0.45)',
+  ];
+
+  // Direction constants: 0=right 1=down 2=left 3=up
+  const DX=[1,0,-1,0],DY=[0,1,0,-1];
+
+  // Char to draw at current cell given: direction pipe came from → direction pipe goes next
+  const PIPE_CHAR={
+    '0,0':'─','1,1':'│','2,2':'─','3,3':'│',
+    '0,1':'┐','0,3':'┘',
+    '1,0':'└','1,2':'┘',
+    '2,1':'┌','2,3':'└',
+    '3,0':'┌','3,2':'┐',
+  };
+
+  function resize(){
+    c.width=innerWidth;c.height=innerHeight;
+    COLS=Math.ceil(innerWidth/CELL)+1;
+    ROWS=Math.ceil(innerHeight/CELL)+1;
+  }
+
+  function reset(){
+    resize();
+    grid=Array.from({length:ROWS},()=>new Array(COLS).fill(null));
+    activePipes=[];
+    ctx.clearRect(0,0,c.width,c.height);
+    ctx.font=`${CELL}px 'Source Code Pro',monospace`;
+    ctx.textBaseline='top';
+    // Spawn initial pipes
+    for(let i=0;i<6;i++) spawnPipe();
+  }
+
+  function spawnPipe(){
+    const col=Math.floor(Math.random()*COLS);
+    const row=Math.floor(Math.random()*ROWS);
+    const dir=Math.floor(Math.random()*4);
+    const color=COLORS[Math.floor(Math.random()*COLORS.length)];
+    activePipes.push({col,row,dir,color,age:0});
+  }
+
+  function drawCell(col,row,ch,color){
+    ctx.fillStyle=color;
+    ctx.fillText(ch,col*CELL,row*CELL);
+  }
+
+  function tick(){
+    if(!document.body.classList.contains('ascii-mode')) return;
+    ctx.font=`${CELL}px 'Source Code Pro',monospace`;
+    ctx.textBaseline='top';
+
+    // If grid is >72% full, slowly fade out then reset
+    const filled=grid.flat().filter(Boolean).length;
+    if(filled>COLS*ROWS*0.72){
+      ctx.fillStyle='rgba(10,12,15,0.07)';
+      ctx.fillRect(0,0,c.width,c.height);
+      activePipes=[];
+      // After enough fades the screen is dark enough — reset grid
+      if(!c._fadeCt) c._fadeCt=0;
+      c._fadeCt++;
+      if(c._fadeCt>60){c._fadeCt=0;reset();}
+      return;
+    }
+    c._fadeCt=0;
+
+    // Step each active pipe
+    const toRemove=[];
+    activePipes.forEach((p,idx)=>{
+      p.age++;
+      // Random chance to turn
+      let possibleDirs=[p.dir];
+      if(Math.random()<0.28){
+        // add perpendicular turns
+        possibleDirs=[(p.dir+1)%4,(p.dir+3)%4];
+        if(Math.random()<0.35) possibleDirs.push(p.dir);// sometimes go straight anyway
+      }
+
+      // shuffle and pick first valid
+      possibleDirs.sort(()=>Math.random()-0.5);
+      let moved=false;
+      for(const nd of possibleDirs){
+        const nc=p.col+DX[nd],nr=p.row+DY[nd];
+        if(nc<0||nc>=COLS||nr<0||nr>=ROWS) continue;
+        if(grid[nr][nc]) continue;
+
+        // Draw corner/straight char at CURRENT cell based on prev dir→new dir
+        const ch=PIPE_CHAR[`${p.dir},${nd}`]||'·';
+        drawCell(p.col,p.row,ch,p.color);
+        grid[p.row][p.col]={ch,color:p.color};
+
+        p.col=nc;p.row=nr;p.dir=nd;
+        moved=true;
+        break;
+      }
+      if(!moved) toRemove.push(idx);
+    });
+
+    // Remove blocked pipes and spawn replacements
+    for(let i=toRemove.length-1;i>=0;i--){
+      activePipes.splice(toRemove[i],1);
+    }
+    // Always keep ~5 active pipes
+    while(activePipes.length<5) spawnPipe();
+  }
+
+  function startTick(){
+    if(tickInterval) clearInterval(tickInterval);
+    tickInterval=setInterval(tick,38);
+  }
+  function stopTick(){
+    clearInterval(tickInterval);tickInterval=null;
+    ctx.clearRect(0,0,c.width,c.height);
+  }
+
+  // Watch for ascii-mode toggle ONLY (ignore casino-mode changes)
+  let prevAscii=false;
+  const observer=new MutationObserver(()=>{
+    const isAscii=document.body.classList.contains('ascii-mode');
+    if(isAscii===prevAscii) return;
+    prevAscii=isAscii;
+    if(isAscii){ reset();startTick(); } else { stopTick(); }
+  });
+  observer.observe(document.body,{attributes:true,attributeFilter:['class']});
+
+  window.addEventListener('resize',()=>{
+    if(document.body.classList.contains('ascii-mode')){reset();startTick();}
+  });
+})();
+
 /* ===== GAME MANAGER ===== */
 const GAMES=[
   {id:'game-slot',    name:'🎰 SLOT MACHINE',   title:'BEN BLIEM · CASINO',  mode:'casino', pills:['#ff5f57','#f5a623','#28c840'], ver:'v1.0'},
@@ -1062,10 +1681,11 @@ function go(i){
   const g=GAMES[cur];
   document.getElementById('gctr').textContent=`SPIEL ${cur+1}/${GAMES.length}`;
   document.getElementById('gname').textContent=g.name;
-  document.getElementById('cab-title').textContent=g.title;
   document.getElementById('cab-ver').textContent=g.ver;
-  // Mode color
-  document.body.className=g.mode==='casino'?'casino-mode':'';
+  // Mode color — preserve ascii-mode if active
+  const wasAscii=document.body.classList.contains('ascii-mode');
+  document.body.className=g.mode==='casino'?'casino-mode':'arcade-mode';
+  if(wasAscii) document.body.classList.add('ascii-mode');
   // Pills
   const pills=document.getElementById('mode-pills');pills.innerHTML='';
   g.pills.forEach(c=>{const p=document.createElement('div');p.className='pill';p.style.background=c;pills.appendChild(p);});
@@ -1266,6 +1886,137 @@ function hlGuess(hi){if(hlCh<hlBet)return;const nxt=~~(Math.random()*100)+1;cons
 document.getElementById('hl-hi').addEventListener('click',()=>hlGuess(true));
 document.getElementById('hl-lo').addEventListener('click',()=>hlGuess(false));
 document.getElementById('hl-co').addEventListener('click',()=>{const w=hlBet*hlStr;hlCh+=w;document.getElementById('hl-chips').textContent=hlCh;hlStr=0;document.getElementById('hl-str').textContent=0;document.getElementById('hl-chain').innerHTML='';document.getElementById('hl-co').disabled=true;const m=document.getElementById('hl-msg');m.className='g-msg win';m.textContent=`Cashout! +${w} Chips gesichert.`;});
+
+/* ===== BOOT SEQUENCE ===== */
+(()=>{
+  const powerBtn=document.getElementById('power-btn');
+  const powerOffState=document.getElementById('power-off-state');
+  const bootTerminal=document.getElementById('boot-terminal');
+  const gameScreen=document.getElementById('game-screen');
+  let booted=false;
+
+  const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+
+  function addLine(text,cls=''){
+    const s=document.createElement('span');
+    s.className='boot-line'+(cls?' '+cls:'');
+    s.textContent=text;
+    bootTerminal.appendChild(s);
+    bootTerminal.scrollTop=bootTerminal.scrollHeight;
+  }
+  function addLineOK(text){
+    const s=document.createElement('span');
+    s.className='boot-line';
+    s.innerHTML=text+'<span class="boot-ok"> OK</span>';
+    bootTerminal.appendChild(s);
+    bootTerminal.scrollTop=bootTerminal.scrollHeight;
+  }
+
+  powerBtn.addEventListener('click',async()=>{
+    if(booted)return;booted=true;
+    powerOffState.style.transition='opacity 0.3s';
+    powerOffState.style.opacity='0';
+    await sleep(300);
+    powerOffState.style.display='none';
+    bootTerminal.style.display='block';
+    bootTerminal.style.animation='crtOn 0.5s ease forwards';
+
+    await sleep(500);
+
+    // BIOS header
+    addLine('BENBLIEM-OS  v2.0.4  [Build 2006-06-04]','boot-title');
+    addLine('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━','boot-dim');
+    addLine('');
+    await sleep(180);addLineOK('CPU   Z80 @ 3.072 MHz .................');
+    await sleep(260);addLineOK('RAM   8KB WORK + 16KB VIDEO ............');
+    await sleep(200);addLineOK('GPU   TILE RENDERER 256×224 ............');
+    await sleep(310);addLineOK('SND   AY-3-8910 PSG ....................');
+    await sleep(180);addLineOK('INP   JOYSTICK + 4 BUTTONS .............');
+    await sleep(220);addLineOK('ROM   ARCADE_SYSTEM.BIN  (128KB) .......');
+    addLine('');
+    await sleep(300);
+    addLine('LOADING  GAMES DATABASE...','boot-dim');
+    await sleep(100);
+
+    // Progress bar
+    const barEl=document.createElement('span');
+    barEl.className='boot-line boot-bar';
+    bootTerminal.appendChild(barEl);
+    const total=32;
+    for(let i=0;i<=total;i++){
+      await sleep(55);
+      const pct=Math.round(i/total*100);
+      barEl.textContent='['+('█').repeat(i)+('░').repeat(total-i)+'] '+pct+'%';
+      bootTerminal.scrollTop=bootTerminal.scrollHeight;
+    }
+    addLine('');
+    await sleep(200);
+    addLine('✔  14 GAMES FOUND','boot-ok');
+    await sleep(80);
+    addLine('✔  HIGH SCORES INITIALISED','boot-ok');
+    await sleep(80);
+    addLine('✔  RANDOM SEED SET','boot-ok');
+    addLine('');
+    await sleep(500);
+
+    // ASCII logo
+    addLine('  ██████╗ ██╗      ██╗███████╗███╗   ███╗','boot-ascii');
+    await sleep(60);addLine('  ██╔══██╗██║      ██║██╔════╝████╗ ████║','boot-ascii');
+    await sleep(60);addLine('  ██████╔╝██║      ██║█████╗  ██╔████╔██║','boot-ascii');
+    await sleep(60);addLine('  ██╔══██╗██║      ██║██╔══╝  ██║╚██╔╝██║','boot-ascii');
+    await sleep(60);addLine('  ██████╔╝███████╗ ██║███████╗██║ ╚═╝ ██║','boot-ascii');
+    await sleep(60);addLine('  ╚═════╝ ╚══════╝ ╚═╝╚══════╝╚═╝     ╚═╝','boot-ascii');
+    await sleep(100);
+    addLine('       A R C A D E   S Y S T E M','boot-ascii');
+    addLine('');
+    await sleep(600);
+
+    const readyEl=document.createElement('span');
+    readyEl.className='boot-line boot-ready';
+    readyEl.textContent='  ▶  PRESS ANY KEY TO START  ◀';
+    bootTerminal.appendChild(readyEl);
+    bootTerminal.scrollTop=bootTerminal.scrollHeight;
+
+    // Wait for any click or keypress, or auto after 3.5s
+    await new Promise(resolve=>{
+      const go=()=>resolve();
+      const autoT=setTimeout(go,3500);
+      const onKey=()=>{clearTimeout(autoT);document.removeEventListener('keydown',onKey);resolve();};
+      const onClick=()=>{clearTimeout(autoT);document.removeEventListener('click',onClick);resolve();};
+      document.addEventListener('keydown',onKey,{once:true});
+      document.addEventListener('click',onClick,{once:true});
+    });
+
+    // Fade out terminal, fade in game
+    bootTerminal.style.transition='opacity 0.35s';
+    bootTerminal.style.opacity='0';
+    await sleep(350);
+    bootTerminal.style.display='none';
+    gameScreen.style.display='block';
+    gameScreen.style.opacity='0';
+    gameScreen.style.transition='opacity 0.4s';
+    await sleep(30);
+    gameScreen.style.opacity='1';
+  });
+})();
+
+/* ===== ASCII MODE TOGGLE ===== */
+(()=>{
+  const toggle=document.getElementById('ascii-toggle');
+  const opts=toggle.querySelectorAll('.aopt');
+  opts.forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const mode=btn.dataset.mode;
+      opts.forEach(o=>o.classList.remove('active'));
+      btn.classList.add('active');
+      if(mode==='asc'){
+        document.body.classList.add('ascii-mode');
+      } else {
+        document.body.classList.remove('ascii-mode');
+      }
+    });
+  });
+})();
 
 // Init — alle Spiele sind jetzt definiert
 go(0);
