@@ -144,11 +144,11 @@
                 gap: 10px;
             }
 
-            /* ─── UPLOAD BOX ─── */
+            /* ─── UPLOAD BOXES ─── */
             .upload-box {
                 border: 2px dashed var(--border);
                 background: var(--bg-4);
-                padding: 30px 15px;
+                padding: 25px 15px;
                 text-align: center;
                 cursor: pointer;
                 transition: all 0.2s ease;
@@ -165,9 +165,9 @@
             }
 
             .upload-icon {
-                font-size: 24px;
+                font-size: 20px;
                 color: var(--accent-2);
-                margin-bottom: 10px;
+                margin-bottom: 8px;
             }
 
             .upload-text {
@@ -394,7 +394,21 @@
                     </div>
 
                     <div class="control-group">
-                        <div class="section-title">02 // Memory Layout</div>
+                        <div class="section-title">02 // Ambient Frame</div>
+                        <div class="upload-box" id="bgUploadBox">
+                            <div class="upload-icon">
+                                <i class="fas fa-image"></i>
+                            </div>
+                            <div class="upload-text">
+                                <strong>CHANGE BACKGROUND MATRIX</strong>
+                                CURRENT BASELINE: Wolf.jpg
+                            </div>
+                        </div>
+                        <input type="file" id="bgInput" accept="image/*" />
+                    </div>
+
+                    <div class="control-group">
+                        <div class="section-title">03 // Memory Layout</div>
                         <button class="btn-success" id="saveLayoutBtn">
                             <i class="fas fa-save"></i> Save Coordinates
                         </button>
@@ -409,13 +423,12 @@
                         style="display: none"
                     >
                         <div class="section-title" style="color: var(--red-2)">
-                            03 // Security Protocol Triggered
+                            04 // Security Triggered
                         </div>
                         <button class="btn-warning" id="bgSelectBtn">
-                            <i class="fas fa-image"></i> Inject Wolf.jpg
-                            Manually
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Re-inject Background Asset
                         </button>
-                        <input type="file" id="bgInput" accept="image/*" />
                     </div>
                 </div>
 
@@ -459,6 +472,7 @@
             const ctx = canvas.getContext("2d");
             const canvasContainer = document.getElementById("canvasContainer");
             const uploadBox = document.getElementById("uploadBox");
+            const bgUploadBox = document.getElementById("bgUploadBox");
             const imageInput = document.getElementById("imageInput");
             const bgInput = document.getElementById("bgInput");
             const bgSelectBtn = document.getElementById("bgSelectBtn");
@@ -476,7 +490,7 @@
             let contentImage = null;
             let composited = false;
 
-            // Updated with your customized standard startup positions
+            // Adjusted customized standard startup positions
             let corners = [
                 { x: 1421.4209702660407, y: 573.6964006259781 },
                 { x: 2048, y: 724.3317683881064 },
@@ -504,7 +518,7 @@
                 }
             }
 
-            function loadBackgroundImage() {
+            function loadBackgroundImage(src = "Wolf.jpg") {
                 loadingOverlay.classList.add("active");
                 const img = new Image();
 
@@ -537,38 +551,59 @@
                     );
                 };
 
-                img.src = "Wolf.jpg";
+                img.src = src;
             }
 
             function showFallbackUI(msg) {
                 loadingOverlay.classList.remove("active");
-                canvasStatus.innerHTML = `<strong>CRITICAL NOTICE:</strong> ${msg}<br>Use override injector panel to provide manual file pathway assets.`;
+                canvasStatus.innerHTML = `<strong>CRITICAL NOTICE:</strong> ${msg}<br>Use the background selector card to upload a manual background matrix frame.`;
                 canvasStatus.className = "status error";
                 fallbackBgSection.style.display = "block";
                 loadSavedLayout();
             }
 
+            // Background file selector interaction logic
             bgSelectBtn.addEventListener("click", () => bgInput.click());
-            bgInput.addEventListener("change", (e) => {
-                if (e.target.files.length > 0) {
-                    const reader = new FileReader();
-                    reader.onload = (event) => {
-                        const img = new Image();
-                        img.onload = () => {
-                            backgroundImage = img;
-                            canvas.width = img.width;
-                            canvas.height = img.height;
-                            canvasStatus.textContent =
-                                "Manual background source override validation success.";
-                            canvasStatus.className = "status success";
-                            fallbackBgSection.style.display = "none";
-                            renderCanvas();
-                        };
-                        img.src = event.target.result;
-                    };
-                    reader.readAsDataURL(e.target.files[0]);
-                }
+            bgUploadBox.addEventListener("click", () => bgInput.click());
+
+            bgUploadBox.addEventListener("dragover", (e) => {
+                e.preventDefault();
+                bgUploadBox.classList.add("dragover");
             });
+            bgUploadBox.addEventListener("dragleave", () =>
+                bgUploadBox.classList.remove("dragover"),
+            );
+            bgUploadBox.addEventListener("drop", (e) => {
+                e.preventDefault();
+                bgUploadBox.classList.remove("dragover");
+                if (e.dataTransfer.files.length > 0)
+                    handleBgUpload(e.dataTransfer.files[0]);
+            });
+
+            bgInput.addEventListener("change", (e) => {
+                if (e.target.files.length > 0)
+                    handleBgUpload(e.target.files[0]);
+            });
+
+            function handleBgUpload(file) {
+                loadingOverlay.classList.add("active");
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        backgroundImage = img;
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        canvasStatus.textContent = `Custom background frame validated: ${file.name}`;
+                        canvasStatus.className = "status success";
+                        fallbackBgSection.style.display = "none";
+                        loadingOverlay.classList.remove("active");
+                        renderCanvas();
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
 
             function transformTriangle(
                 img,
@@ -847,7 +882,6 @@
                     )
                 ) {
                     localStorage.removeItem("laptop_overlay_corners");
-                    // Updated with your new fallback defaults here as well
                     corners = [
                         { x: 1421.4209702660407, y: 573.6964006259781 },
                         { x: 2048, y: 724.3317683881064 },
@@ -923,9 +957,10 @@
                 contentImage = null;
                 composited = false;
                 imageInput.value = "";
+                bgInput.value = "";
                 uploadStatus.textContent = "Awaiting source stream...";
                 downloadBtn.disabled = true;
-                renderCanvas();
+                loadBackgroundImage(); // Fallback back to standard Wolf.jpg asset
             });
 
             loadBackgroundImage();
