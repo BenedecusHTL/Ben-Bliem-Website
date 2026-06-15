@@ -9,104 +9,175 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         />
         <style>
+            /* ─── COLOR SYSTEM ─────────────────────────────────────────── */
+            :root {
+                --text-1: oklch(95% 0 0);
+                --text-2: oklch(85% 0 0);
+                --text-3: oklch(75% 0 0);
+                --text-4: oklch(60% 0 0);
+                --text-5: oklch(40% 0 0);
+
+                --bg-1: oklch(31% 0 0);
+                --bg-2: oklch(27% 0 0);
+                --bg-3: oklch(23% 0 0);
+                --bg-4: oklch(19% 0 0);
+
+                --hover: oklch(27% 0 0);
+                --active: oklch(35% 0 0);
+                --active-2: oklch(40% 0 0);
+
+                --border-light: oklch(35% 0 0);
+                --border: oklch(45% 0 0);
+                --border-hover: oklch(73% 0.07 105);
+
+                /* Gold scale */
+                --gold-1: oklch(78% 0.07 105);
+                --gold-2: oklch(73% 0.07 105);
+                --gold-3: oklch(68% 0.07 105);
+                --gold-4: oklch(63% 0.07 105);
+                --gold-5: oklch(58% 0.07 105);
+
+                /* Accent aliases */
+                --accent-1: var(--gold-1);
+                --accent-2: var(--gold-2);
+                --accent-3: var(--gold-3);
+                --accent-4: var(--gold-4);
+                --accent-5: var(--gold-5);
+
+                /* Danger */
+                --red-2: oklch(70% 0.13 0);
+
+                /* Title colors */
+                --title-cyan: #5cf0f0;
+                --title-pink: #ff5ec4;
+            }
+
+            /* ─── BASE STYLES ─────────────────────────────────────────── */
             * {
                 margin: 0;
                 padding: 0;
                 box-sizing: border-box;
             }
 
+            html,
             body {
-                font-family:
-                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-                    sans-serif;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                 min-height: 100vh;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 20px;
+                font-family:
+                    "JetBrains Mono", "Fira Code", "Courier New", monospace;
+                color: var(--text-2);
+                background: #111214;
+                overflow-x: hidden;
             }
 
             .container {
-                background: white;
-                border-radius: 16px;
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-                max-width: 1000px;
-                width: 100%;
-                padding: 40px;
+                max-width: 1080px;
+                margin: 0 auto;
+                padding: 2rem 1.5rem 3rem;
             }
 
+            /* ─── HEADER TERMINAL STYLE ───────────────────────────────── */
             .header {
-                text-align: center;
-                margin-bottom: 30px;
+                text-align: left;
+                border: 2px solid var(--border);
+                background: var(--bg-4);
+                padding: 20px;
+                margin-bottom: 25px;
+                position: relative;
+            }
+
+            .header::before {
+                content: "■ SYSTEM OVERLAY ENGINE";
+                position: absolute;
+                top: -12px;
+                left: 15px;
+                background: #111214;
+                padding: 0 8px;
+                font-size: 11px;
+                color: var(--accent-2);
+                font-weight: bold;
             }
 
             .header h1 {
-                font-size: 28px;
-                color: #333;
-                margin-bottom: 8px;
+                font-size: 24px;
+                color: var(--title-cyan);
+                margin-bottom: 6px;
+                font-weight: 700;
+                letter-spacing: -0.5px;
             }
 
             .header p {
-                color: #666;
-                font-size: 14px;
+                color: var(--text-4);
+                font-size: 13px;
             }
 
+            /* ─── CONTENT GRID ────────────────────────────────────────── */
             .content {
                 display: grid;
-                grid-template-columns: 300px 1fr;
-                gap: 30px;
-                margin-bottom: 30px;
+                grid-template-columns: 320px 1fr;
+                gap: 25px;
+                margin-bottom: 25px;
             }
 
-            .section {
+            .panel {
+                background: var(--bg-3);
+                border: 2px solid var(--border);
+                padding: 20px;
                 display: flex;
                 flex-direction: column;
-                gap: 15px;
+                gap: 20px;
             }
 
             .section-title {
-                font-size: 14px;
-                font-weight: 600;
-                color: #333;
+                font-size: 12px;
+                font-weight: 700;
+                color: var(--title-pink);
                 text-transform: uppercase;
-                letter-spacing: 0.5px;
+                letter-spacing: 1px;
+                border-bottom: 1px dashed var(--border);
+                padding-bottom: 6px;
+                margin-bottom: 4px;
             }
 
+            .control-group {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            /* ─── UPLOAD BOX ─── */
             .upload-box {
-                border: 2px dashed #ddd;
-                border-radius: 12px;
-                padding: 25px 15px;
+                border: 2px dashed var(--border);
+                background: var(--bg-4);
+                padding: 30px 15px;
                 text-align: center;
                 cursor: pointer;
-                transition: all 0.3s ease;
-                background: #f9f9f9;
+                transition: all 0.2s ease;
             }
 
             .upload-box:hover {
-                border-color: #667eea;
-                background: #f0f4ff;
+                border-color: var(--accent-2);
+                background: var(--hover);
             }
 
             .upload-box.dragover {
-                border-color: #667eea;
-                background: #f0f4ff;
-                transform: scale(1.02);
+                border-color: var(--title-cyan);
+                background: var(--active);
             }
 
             .upload-icon {
-                font-size: 28px;
-                color: #667eea;
-                margin-bottom: 12px;
+                font-size: 24px;
+                color: var(--accent-2);
+                margin-bottom: 10px;
             }
 
             .upload-text {
-                color: #666;
-                font-size: 12px;
+                color: var(--text-4);
+                font-size: 11px;
+                line-height: 1.4;
             }
 
             .upload-text strong {
-                color: #333;
+                color: var(--text-1);
                 display: block;
                 margin-bottom: 4px;
             }
@@ -116,12 +187,12 @@
                 display: none;
             }
 
+            /* ─── INTERACTIVE INTERFACE ─── */
             .canvas-container {
                 position: relative;
-                border: 1px solid #eee;
-                border-radius: 12px;
+                border: 2px solid var(--border);
+                background: #0d0e10;
                 overflow: hidden;
-                background: #f5f5f5;
                 user-select: none;
             }
 
@@ -131,97 +202,149 @@
                 height: auto;
             }
 
+            /* ─── STATUS OUTPUTS ─── */
             .status {
-                font-size: 12px;
-                color: #999;
-                text-align: center;
+                font-size: 11px;
+                color: var(--text-4);
+                padding: 8px 12px;
+                background: var(--bg-4);
+                border-left: 3px solid var(--border);
+                line-height: 1.4;
+                word-break: break-word;
             }
 
             .status.success {
-                color: #10b981;
+                border-left-color: var(--accent-2);
+                color: var(--text-2);
             }
 
             .status.error {
-                color: #ef4444;
+                border-left-color: var(--red-2);
+                color: var(--red-2);
+                background: var(--bg-4);
             }
 
-            .controls {
-                display: flex;
-                gap: 12px;
-                margin-top: 20px;
-                flex-wrap: wrap;
-            }
-
+            /* ─── BUTTONS SYSTEM (TUI LOOK) ─── */
             button {
-                flex: 1;
-                min-width: 140px;
-                padding: 12px 20px;
-                border: none;
-                border-radius: 8px;
-                font-size: 14px;
-                font-weight: 600;
+                width: 100%;
+                padding: 10px 16px;
+                border: 2px solid var(--border);
+                background: var(--bg-2);
+                color: var(--text-2);
+                font-family: inherit;
+                font-size: 12px;
+                font-weight: 700;
                 cursor: pointer;
-                transition: all 0.3s ease;
+                transition: all 0.15s ease;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 gap: 8px;
+                text-transform: uppercase;
+            }
+
+            button:hover:not(:disabled) {
+                background: var(--hover);
+                color: var(--text-1);
+                border-color: var(--border-hover);
+            }
+
+            button:active:not(:disabled) {
+                background: var(--active);
             }
 
             .btn-primary {
-                background: #667eea;
-                color: white;
+                border-color: var(--accent-3);
+                color: var(--accent-1);
+                background: var(--bg-4);
             }
-
             .btn-primary:hover:not(:disabled) {
-                background: #5568d3;
-                transform: translateY(-2px);
-                box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+                background: var(--accent-4);
+                color: #111214;
+                border-color: var(--accent-2);
             }
 
             .btn-success {
-                background: #10b981;
-                color: white;
+                border-color: var(--border);
+                color: var(--text-2);
             }
-
             .btn-success:hover:not(:disabled) {
-                background: #059669;
-                transform: translateY(-2px);
-                box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+                border-color: var(--accent-2);
+                color: var(--accent-1);
             }
 
             .btn-secondary {
-                background: #eee;
-                color: #333;
-            }
-
-            .btn-secondary:hover:not(:disabled) {
-                background: #ddd;
+                border-color: var(--border-light);
+                color: var(--text-4);
+                font-size: 11px;
+                padding: 6px 12px;
             }
 
             .btn-warning {
-                background: #f59e0b;
-                color: white;
+                border-color: var(--red-2);
+                color: var(--red-2);
+                background: var(--bg-4);
             }
-            .btn-warning:hover {
-                background: #d97706;
+            .btn-warning:hover:not(:disabled) {
+                background: var(--red-2);
+                color: #111214;
             }
 
             button:disabled {
-                opacity: 0.5;
+                opacity: 0.3;
                 cursor: not-allowed;
-                transform: none !important;
-                box-shadow: none !important;
+                border-color: var(--border-light) !important;
+                color: var(--text-5) !important;
+                background: var(--bg-4) !important;
+            }
+
+            /* ─── BOTTOM CONTROLS & INFO ─── */
+            .controls {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+                margin-top: 20px;
+            }
+
+            .info-box {
+                background: var(--bg-4);
+                border: 2px dashed var(--border);
+                padding: 15px;
+                font-size: 11px;
+                color: var(--text-3);
+                margin-top: 25px;
+                line-height: 1.5;
+            }
+
+            .info-box strong {
+                color: var(--accent-2);
+            }
+
+            /* ─── LOADING INDICATOR ─── */
+            .loading-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: var(--bg-4);
+                display: none;
+                align-items: center;
+                justify-content: center;
+                z-index: 10;
+            }
+
+            .loading-overlay.active {
+                display: flex;
             }
 
             .spinner {
                 display: inline-block;
-                width: 14px;
-                height: 14px;
-                border: 2px solid rgba(100, 126, 234, 0.3);
-                border-top: 2px solid #667eea;
-                border-radius: 50%;
-                animation: spin 0.8s linear infinite;
+                width: 20px;
+                height: 20px;
+                border: 2px solid var(--border);
+                border-top: 2px solid var(--accent-2);
+                animation: spin 0.6s linear infinite;
             }
 
             @keyframes spin {
@@ -230,36 +353,12 @@
                 }
             }
 
-            .info-box {
-                background: #f0f4ff;
-                border-left: 4px solid #667eea;
-                padding: 12px 16px;
-                border-radius: 8px;
-                font-size: 13px;
-                color: #333;
-                margin-top: 20px;
-            }
-
-            .loading-overlay {
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(255, 255, 255, 0.8);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 10;
-                display: none;
-            }
-
-            .loading-overlay.active {
-                display: flex;
-            }
-
+            /* ─── RESPONSIVENESS ─── */
             @media (max-width: 768px) {
                 .content {
+                    grid-template-columns: 1fr;
+                }
+                .controls {
                     grid-template-columns: 1fr;
                 }
             }
@@ -268,63 +367,61 @@
     <body>
         <div class="container">
             <div class="header">
-                <h1>Laptop Screen Perfect Fit</h1>
+                <h1>LAPTOP SCREEN PERFECT FIT</h1>
                 <p>
-                    Drag the corner handles onto the laptop screen to warp your
-                    image onto it
+                    Map external layout nodes sequentially onto system hardware
+                    matrix assets.
                 </p>
             </div>
 
             <div class="content">
-                <div class="section">
-                    <div class="section-title">Upload Content Image</div>
-                    <div class="upload-box" id="uploadBox">
-                        <div class="upload-icon">📤</div>
-                        <div class="upload-text">
-                            <strong>Click to upload or drag & drop</strong>
-                            PNG, JPG, or WebP supported
+                <div class="panel">
+                    <div class="control-group">
+                        <div class="section-title">01 // Content Asset</div>
+                        <div class="upload-box" id="uploadBox">
+                            <div class="upload-icon">
+                                <i class="fas fa-terminal"></i>
+                            </div>
+                            <div class="upload-text">
+                                <strong>DROP OR SELECT FILE</strong>
+                                RAW IMAGE OVERLAY INPUT
+                            </div>
                         </div>
+                        <div class="status" id="uploadStatus">
+                            Awaiting source stream...
+                        </div>
+                        <input type="file" id="imageInput" accept="image/*" />
                     </div>
-                    <div class="status" id="uploadStatus"></div>
-                    <input type="file" id="imageInput" accept="image/*" />
 
-                    <div class="section-title" style="margin-top: 15px">
-                        Layout Management
+                    <div class="control-group">
+                        <div class="section-title">02 // Memory Layout</div>
+                        <button class="btn-success" id="saveLayoutBtn">
+                            <i class="fas fa-save"></i> Save Coordinates
+                        </button>
+                        <button class="btn-secondary" id="resetLayoutBtn">
+                            <i class="fas fa-trash-alt"></i> Purge Matrix Cache
+                        </button>
                     </div>
-                    <button class="btn-success" id="saveLayoutBtn">
-                        <i class="fas fa-save"></i> Save Layout Position
-                    </button>
-                    <button
-                        class="btn-secondary"
-                        id="resetLayoutBtn"
-                        style="font-size: 12px; padding: 6px 12px"
-                    >
-                        <i class="fas fa-trash-alt"></i> Reset Corners to
-                        Default
-                    </button>
 
                     <div
                         id="fallbackBgSection"
-                        style="display: none; margin-top: 15px"
+                        class="control-group"
+                        style="display: none"
                     >
-                        <div class="section-title" style="color: #d97706">
-                            Browser Security Triggered
+                        <div class="section-title" style="color: var(--red-2)">
+                            03 // Security Protocol Triggered
                         </div>
-                        <button
-                            class="btn-warning"
-                            id="bgSelectBtn"
-                            style="font-size: 12px"
-                        >
-                            <i class="fas fa-image"></i> Select Wolf.jpg
+                        <button class="btn-warning" id="bgSelectBtn">
+                            <i class="fas fa-image"></i> Inject Wolf.jpg
                             Manually
                         </button>
                         <input type="file" id="bgInput" accept="image/*" />
                     </div>
                 </div>
 
-                <div class="section">
+                <div class="panel">
                     <div class="section-title">
-                        Interactive Alignment Display
+                        Interactive Workspace Alignment Display
                     </div>
                     <div class="canvas-container" id="canvasContainer">
                         <canvas id="canvas"></canvas>
@@ -333,27 +430,27 @@
                         </div>
                     </div>
                     <div class="status" id="canvasStatus">
-                        Trying to auto-load background...
+                        Initializing tracking nodes... Loading background
+                        environment...
                     </div>
                 </div>
             </div>
 
             <div class="controls">
                 <button class="btn-primary" id="downloadBtn" disabled>
-                    <i class="fas fa-download"></i> Download Result
+                    <i class="fas fa-download"></i> Compile & Download Output
                 </button>
-                <button class="btn-secondary" id="resetBtn">
-                    <i class="fas fa-redo"></i> Clear Content Image
+                <button class="btn-success" id="resetBtn">
+                    <i class="fas fa-redo"></i> Flush Input Stream
                 </button>
             </div>
 
             <div class="info-box">
-                <strong>Interactive Calibration Guide:</strong> Click and drag
-                the circular target nodes situated near the laptop's screen
-                boundaries. Your uploaded asset will warp immediately using
-                perspective grid logic. Hit
-                <strong>Save Layout Position</strong> to ensure your precise
-                configuration remains identical when refreshing.
+                <strong>[!] CALIBRATION COMMANDS:</strong> Drag the circular
+                target nodes located around your display target. The pipeline
+                shifts matrix perspectives calculation fields dynamically.
+                Clicking <strong>"Save Coordinates"</strong> ensures persistent
+                alignment states remain bound between sessions.
             </div>
         </div>
 
@@ -379,11 +476,12 @@
             let contentImage = null;
             let composited = false;
 
+            // Updated with your customized standard startup positions
             let corners = [
-                { x: 622, y: 359 },
-                { x: 919, y: 395 },
-                { x: 906, y: 846 },
-                { x: 574, y: 625 },
+                { x: 1421.4209702660407, y: 573.6964006259781 },
+                { x: 2048, y: 724.3317683881064 },
+                { x: 1822.0469483568077, y: 1265.9780907668232 },
+                { x: 1286.810641627543, y: 942.2723004694836 },
             ];
 
             let activeHandleIndex = null;
@@ -410,7 +508,6 @@
                 loadingOverlay.classList.add("active");
                 const img = new Image();
 
-                // Set up a brief timeout safety valve in case the browser silently drops the request
                 let timeout = setTimeout(() => {
                     if (!backgroundImage) {
                         showFallbackUI(
@@ -426,7 +523,7 @@
                     canvas.height = img.height;
                     loadingOverlay.classList.remove("active");
                     canvasStatus.textContent =
-                        "Background loaded successfully. Drag corners to map overlay layout!";
+                        "Background active. Calibrate mapping layout vectors via tracking nodes.";
                     canvasStatus.className = "status success";
                     fallbackBgSection.style.display = "none";
                     loadSavedLayout();
@@ -445,13 +542,12 @@
 
             function showFallbackUI(msg) {
                 loadingOverlay.classList.remove("active");
-                canvasStatus.innerHTML = `<strong>Notice:</strong> ${msg}<br>Please click the button on the left to provide access manually.`;
+                canvasStatus.innerHTML = `<strong>CRITICAL NOTICE:</strong> ${msg}<br>Use override injector panel to provide manual file pathway assets.`;
                 canvasStatus.className = "status error";
                 fallbackBgSection.style.display = "block";
                 loadSavedLayout();
             }
 
-            // Setup manual background selection listeners
             bgSelectBtn.addEventListener("click", () => bgInput.click());
             bgInput.addEventListener("change", (e) => {
                 if (e.target.files.length > 0) {
@@ -463,7 +559,7 @@
                             canvas.width = img.width;
                             canvas.height = img.height;
                             canvasStatus.textContent =
-                                "Background manual override loaded successfully!";
+                                "Manual background source override validation success.";
                             canvasStatus.className = "status success";
                             fallbackBgSection.style.display = "none";
                             renderCanvas();
@@ -639,25 +735,25 @@
                     ctx.lineTo(corners[i].x, corners[i].y);
                 }
                 ctx.closePath();
-                ctx.strokeStyle = "rgba(102, 126, 234, 0.8)";
-                ctx.lineWidth = 3;
+
+                ctx.strokeStyle = "#5cf0f0";
+                ctx.lineWidth = 2;
                 ctx.stroke();
-                ctx.fillStyle = "rgba(102, 126, 234, 0.08)";
-                ctx.fill();
 
                 corners.forEach((corner, idx) => {
                     ctx.beginPath();
                     ctx.arc(corner.x, corner.y, HANDLE_RADIUS, 0, 2 * Math.PI);
                     ctx.fillStyle =
-                        idx === activeHandleIndex ? "#10b981" : "#667eea";
+                        idx === activeHandleIndex ? "#ff5ec4" : "#111214";
                     ctx.fill();
-                    ctx.strokeStyle = "white";
+                    ctx.strokeStyle = "#5cf0f0";
                     ctx.lineWidth = 2;
                     ctx.stroke();
 
                     ctx.beginPath();
                     ctx.arc(corner.x, corner.y, 2, 0, 2 * Math.PI);
-                    ctx.fillStyle = "white";
+                    ctx.fillStyle =
+                        idx === activeHandleIndex ? "#111214" : "#5cf0f0";
                     ctx.fill();
                 });
             }
@@ -740,18 +836,23 @@
                     JSON.stringify(corners),
                 );
                 alert(
-                    "Layout corner positions successfully locked in! They will load automatically next time.",
+                    "SUCCESS: Vector positions saved directly into browser registry storage memory.",
                 );
             });
 
             resetLayoutBtn.addEventListener("click", () => {
-                if (confirm("Reset corners to initial starting positions?")) {
+                if (
+                    confirm(
+                        "Reset current perspective corners to default startup vectors?",
+                    )
+                ) {
                     localStorage.removeItem("laptop_overlay_corners");
+                    // Updated with your new fallback defaults here as well
                     corners = [
-                        { x: 622, y: 359 },
-                        { x: 919, y: 395 },
-                        { x: 906, y: 846 },
-                        { x: 574, y: 625 },
+                        { x: 1421.4209702660407, y: 573.6964006259781 },
+                        { x: 2048, y: 724.3317683881064 },
+                        { x: 1822.0469483568077, y: 1265.9780907668232 },
+                        { x: 1286.810641627543, y: 942.2723004694836 },
                     ];
                     renderCanvas();
                 }
@@ -785,7 +886,7 @@
                         contentImage = img;
                         composited = true;
                         renderCanvas();
-                        uploadStatus.textContent = `✓ Content loaded: ${file.name}`;
+                        uploadStatus.textContent = `✓ Channel Active: ${file.name}`;
                         uploadStatus.className = "status success";
                         downloadBtn.disabled = false;
                         loadingOverlay.classList.remove("active");
@@ -807,7 +908,7 @@
                         const url = URL.createObjectURL(blob);
                         const a = document.createElement("a");
                         a.href = url;
-                        a.download = "laptop-screen-perfect-fit.png";
+                        a.download = "matrix-render-output.png";
                         document.body.appendChild(a);
                         a.click();
                         document.body.removeChild(a);
@@ -822,7 +923,7 @@
                 contentImage = null;
                 composited = false;
                 imageInput.value = "";
-                uploadStatus.textContent = "";
+                uploadStatus.textContent = "Awaiting source stream...";
                 downloadBtn.disabled = true;
                 renderCanvas();
             });
